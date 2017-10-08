@@ -17,11 +17,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-signin">
+        <form class="form-signin" ng-submit="register($event)">
           <label for="inputEmail" class="sr-only">Adresse E-mail</label>
-          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email">
+          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
+          <div [hidden]="isEmailValid"
+              class="alert alert-danger">
+            L'adresse email n'est lié à aucun compte'
+          </div>
+
           <label for="inputPassword" class="sr-only">Mot de passe</label>
-          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password">
+          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" required>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Inscription</button>
         </form>
       </div>
@@ -43,11 +48,15 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-signin">
+        <form class="form-signin" (submit)="login($event)">
           <label for="inputEmail" class="sr-only">Adresse E-mail</label>
-          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email">
+          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
+          <div [hidden]="isEmailValid()"
+              class="alert alert-danger">
+            L'adresse email n'est lié à aucun compte'
+          </div>
           <label for="inputPassword" class="sr-only">Mot de passe</label>
-          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password">
+          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" required>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
         </form>
       </div>

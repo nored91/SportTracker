@@ -4,9 +4,24 @@ import { FormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AccountComponent } from './account/account.component';
-import { RouterModule }   from '@angular/router';
+import { RouterModule, Routes }   from '@angular/router';
 import { DetailsComponent } from './details/details.component';
 import { HomeComponent } from './home/home.component';
+
+const appRoutes:Routes = [
+    {
+      path: 'en-savoir-plus',
+      component: DetailsComponent
+    },
+    {
+      path: '',
+      component: HomeComponent
+    },
+    {
+      path: 'tableau-de-bord',
+      component: DetailsComponent
+    }
+]
 
 @NgModule({
   declarations: [
@@ -18,16 +33,7 @@ import { HomeComponent } from './home/home.component';
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot([
-    {
-      path: 'en-savoir-plus',
-      component: DetailsComponent
-    },
-    {
-      path: '',
-      component: HomeComponent
-    }
-])
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]
