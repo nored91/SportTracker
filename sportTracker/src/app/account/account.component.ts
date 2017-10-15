@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from './account';
 import { Router } from '@angular/router';
 import { AccountService } from './account.service';
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-account',
@@ -12,28 +14,58 @@ import { AccountService } from './account.service';
 export class AccountComponent implements OnInit {
   accounts : Account[];
   error : boolean;
+  msgError : string;
 
   constructor(private accountService: AccountService, private router:Router) {
     this.accounts = this.accountService.getAccount();  
-    this.error = false;    
+    this.error = false; 
+    this.msgError = "";   
   }
 
-  login(e){
+  public login(e){
       e.preventDefault();
       var email = e.target.elements[0].value;
       var mdp = e.target.elements[1].value;
-      if(this.accountService.login(email,mdp)){
+      if(!email){
+          this.error = true;
+          this.msgError = "L'adresse email est vide";
+          return false;
+      }
+      if(!mdp){
+          this.error = true;
+          this.msgError = "Aucun mot de passe de rempli";
+          return false;
+      }
+      if(!this.accountService.login(email,mdp)){
+          this.error = true;
+            this.msgError = "Mauvais identifiants ou le compte n'existe pas";
+            return false;
+          
+      }
+      //On se connecte avec bon email et bon mdp
+      else{
           this.router.navigate(["tableau-de-bord"]);
           this.error = false;
+
+          //On ferme la modal
+          $('#logInModal').modal('hide');
+          return true;
       }
-      else{
-        this.error = true;
-      }
-      return false;
   }
 
-  isEmailValid(){
-      return this.error;
+  /**
+   * Si l'email est valide
+   * True si il est valide, False sinon
+   */
+  public isEmailValid(){
+      return !this.error;
+  }
+
+  /**
+   * Pour retourne le message d'erreur
+   */
+  public getMsgError(){
+      return this.msgError;
   }
 
   ngOnInit() {
