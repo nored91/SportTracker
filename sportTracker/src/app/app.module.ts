@@ -7,6 +7,7 @@ import { AccountComponent } from './account/account.component';
 import { RouterModule, Routes }   from '@angular/router';
 import { DetailsComponent } from './details/details.component';
 import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const appRoutes:Routes = [
     {
@@ -19,7 +20,7 @@ const appRoutes:Routes = [
     },
     {
       path: 'tableau-de-bord',
-      component: DetailsComponent
+      component: DashboardComponent
     }
 ]
 
@@ -28,7 +29,8 @@ const appRoutes:Routes = [
     AppComponent,
     AccountComponent,
     DetailsComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
