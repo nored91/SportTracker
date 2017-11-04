@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express()
 
-app.get('/', function (req, res) {
+app.get('/api', function (req, res) {
   res.send('Hello World!')
 });
 
-app.get('/accout/list', function (req, res) {
+app.get('/api/account/list', function (req, res) {
   var result = {
     resultat : 'OK', 
     data : { 
@@ -16,7 +16,7 @@ app.get('/accout/list', function (req, res) {
   res.json(result);
 })
 
-app.get('/accout/insert/*', function (req, res) {
+app.get('/api/account/insert/*', function (req, res) {
   var result = {resultat : 'OK', message : 'Insertion réussie'};
   res.json(result);
 });

@@ -12,14 +12,12 @@ declare var $ :any;
   providers: [AccountService]
 })
 export class AccountComponent implements OnInit {
-  accounts : Account[];
   error : boolean;
   msgError : string;
 
   constructor(private accountService: AccountService, private router:Router) {
-    this.accounts = this.accountService.getAccount();  
-    this.error = false; 
-    this.msgError = "";   
+    this.error = false;
+    this.msgError = "";
   }
 
   public login(e){
