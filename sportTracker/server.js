@@ -8,10 +8,10 @@ app.get('/api', function (req, res) {
 app.get('/api/account/list', function (req, res) {
   var result = {
     resultat : 'OK', 
-    data : { 
-    0 : {id: 1, name: 'Mr. Nice' ,mdp: 'test', email: 'test@test.fr' },
-    1 : {id: 2, name: 'Mr. Bad' ,mdp: 'test2', email: 'test2@test.fr' }
-    }
+    data : [
+      {id: 1, name: 'Mr. Nice' ,mdp: 'test', email: 'test@test.fr' },
+      {id: 2, name: 'Mr. Bad' ,mdp: 'test2', email: 'test2@test.fr' }
+    ]
   };
   res.json(result);
 })

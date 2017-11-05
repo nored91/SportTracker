@@ -14,12 +14,33 @@ declare var $ :any;
 export class AccountComponent implements OnInit {
   error : boolean;
   msgError : string;
+  private accounts : Account[];
 
   constructor(private accountService: AccountService, private router:Router) {
     this.error = false;
     this.msgError = "";
   }
+  
+  //Permet de récupérer les comptes via le service AccountService
+  private getAccounts(): void{
+    this.accountService.getAccounts().then(accounts => this.accounts = accounts);
+  }
+  
+  //Sert a la méthode verfyLoginMdp
+  private findEmail(obj,val) : boolean{
+    return obj.email === val;
+  }
 
+  //On vérifie le login/Mdp dans la liste de compte
+  private verifyLoginMdp(email,mdp){
+    var a = this.accounts.find(c => this.findEmail(c,email));
+    if(a){
+        return mdp == a.mdp;
+    }
+    return false;
+  }
+
+  //On vient chercher à se logguer
   public login(e){
       e.preventDefault();
       var email = e.target.elements[0].value;
@@ -34,7 +55,7 @@ export class AccountComponent implements OnInit {
           this.msgError = "Aucun mot de passe de rempli";
           return false;
       }
-      if(!this.accountService.login(email,mdp)){
+      if(!this.verifyLoginMdp(email,mdp)){
           this.error = true;
             this.msgError = "Mauvais identifiants ou le compte n'existe pas";
             return false;
@@ -60,13 +81,15 @@ export class AccountComponent implements OnInit {
   }
 
   /**
-   * Pour retourne le message d'erreur
+   * Pour retourner le message d'erreur
    */
   public getMsgError(){
       return this.msgError;
   }
 
+  //Il faut faire appel ici à la fonction getAccounts récupérant les comptes via les Promise
   ngOnInit() {
+      this.getAccounts();
   }
 
 }
