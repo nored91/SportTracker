@@ -17,16 +17,23 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-signin" ng-submit="register($event)">
-          <label for="inputEmail" class="sr-only">Adresse E-mail</label>
-          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
-          <div [hidden]="isEmailValid"
-              class="alert alert-danger">
-            L'adresse email n'est lié à aucun compte'
+        <form class="form-register" (submit)="register($event)">
+          <div [hidden]="isValid('FormRegister')" class="alert alert-danger">
+              {{getMsgError('FormRegister')}}
           </div>
 
+          <label for="inputSurName" class="sr-only">Prénom</label>
+          <input id="inputSurName" class="form-control" placeholder="Prénom" required="" autofocus="" type="" required>
+          <br>
+          <label for="inputName" class="sr-only">Nom</label>
+          <input id="inputName" class="form-control" placeholder="Nom" required="" autofocus="" type="" required>
+          <br>
+          <label for="inputEmail" class="sr-only">Adresse E-mail</label>
+          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
+          <br>
           <label for="inputPassword" class="sr-only">Mot de passe</label>
           <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" required>
+          <br>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Inscription</button>
         </form>
       </div>
@@ -49,14 +56,16 @@
       </div>
       <div class="modal-body">
         <form class="form-signin" (submit)="login($event)">
-          <div [hidden]="isEmailValid()" class="alert alert-danger">
-              {{getMsgError()}}
+          <div [hidden]="isValid('FormLogin')" class="alert alert-danger">
+              {{getMsgError('FormLogin')}}
           </div>
           
           <label for="inputEmail" class="sr-only">Adresse E-mail</label>
           <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
+          <br>
           <label for="inputPassword" class="sr-only">Mot de passe</label>
           <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" required>
+          <br>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
         </form>
       </div>
