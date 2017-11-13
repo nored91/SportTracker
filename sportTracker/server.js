@@ -20,6 +20,7 @@ var con = mysql.createConnection({
     res.send('Hello World!')
   });
 
+
   app.get('/api/account/list', function (req, res) {
 
     var resultat = {resultat : 'NOK', data : [], message : ''};
@@ -63,6 +64,28 @@ var con = mysql.createConnection({
         resultat.resultat = 'OK';
         res.json(resultat);
       }
+    });
+  });
+
+  app.get('/api/account/:id', function (req, res) {
+    var resultat = {resultat : 'NOK', data : null, message : ''};
+    var reqSql = "SELECT * FROM account WHERE id = ?";
+
+    con.query(reqSql, [req.params.id], function (error, results, fields) {
+      if (error){
+        resultat.message = error;
+      } 
+      else{
+        if(results.length != 0){
+          resultat.resultat = 'OK';
+          resultat.data = results;
+        }
+        else{
+          resultat.message = "Aucun compte avec cet identifiant";
+        }
+        
+      }
+      res.json(resultat);
     });
   });
 

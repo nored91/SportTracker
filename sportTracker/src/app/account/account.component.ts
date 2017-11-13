@@ -12,8 +12,8 @@ declare var $ :any;
   providers: [AccountService]
 })
 export class AccountComponent implements OnInit {
-  error : {};
-  msgError : {};
+  public error : {};
+  public msgError : {};
   private accounts : Account[];
 
   constructor(private accountService: AccountService, private router:Router) {
@@ -24,6 +24,7 @@ export class AccountComponent implements OnInit {
   //Permet de récupérer les comptes via le service AccountService
   private getAccounts(): void{
     this.accountService.getAccounts().then(accounts => this.accounts = accounts);
+    
   }
   
   //Sert a la méthode verfyLoginMdp
@@ -32,13 +33,16 @@ export class AccountComponent implements OnInit {
   }
 
   //On vérifie le login/Mdp dans la liste de compte
-  private verifyLoginMdp(email,mdp){
-      
-    var a = this.accounts.find(c => this.findEmail(c,email));
-    if(a){
-        return mdp == a.mdp;
+  private verifyLoginMdp(email,mdp) : Account{
+    if(this.accounts != null){
+        var a = this.accounts.find(c => this.findEmail(c,email));
+        if(a){
+            if(mdp == a.mdp){
+                return a
+            }
+        }
     }
-    return false;
+    return null;
   }
 
   //On vérifie si l'email existe déjà
@@ -61,7 +65,8 @@ export class AccountComponent implements OnInit {
           this.msgError['FormLogin'] = "Aucun mot de passe de rempli";
           return false;
       }
-      if(!this.verifyLoginMdp(email,mdp)){
+      var accountConnexion = this.verifyLoginMdp(email,mdp);
+      if(accountConnexion == null){
           this.error['FormLogin'] = true;
             this.msgError['FormLogin'] = "Mauvais identifiants ou le compte n'existe pas";
             return false;
@@ -69,6 +74,7 @@ export class AccountComponent implements OnInit {
       }
       //On se connecte avec bon email et bon mdp
       else{
+          localStorage.setItem('id', "" + accountConnexion.id);
           this.router.navigate(["tableau-de-bord"]);
           this.error['FormLogin'] = false;
 
@@ -116,9 +122,11 @@ export class AccountComponent implements OnInit {
       else{
           //On demande au service de créer le compte et on l'ajoute à la liste
           this.accountService.createAccount(surname,name,mdp,email).then(account => {
+            localStorage.setItem('id', "" + account.id);
             this.accounts.push(account);
             this.router.navigate(["tableau-de-bord"]);
             this.error['FormRegister'] = false;
+            
             //On ferme la modal
             $('#registerModal').modal('hide');
             return true
@@ -127,8 +135,6 @@ export class AccountComponent implements OnInit {
             this.msgError['FormRegister'] = "Erreur à la création du compte";
             return false;
         });
-
-          
       }
   }
 

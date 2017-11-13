@@ -1,6 +1,6 @@
-<div class="jumbotron">
+<div class="jumbotron" *ngIf="account">
   <div class="container">
-    <h1 class="display-3"> Votre Tableau de bord</h1>
+    <h1 class="display-3">Tableau de bord : {{ account.name }} {{ account.surname }} </h1>
   </div>
 </div>
 <div class="container">

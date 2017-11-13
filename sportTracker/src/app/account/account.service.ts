@@ -9,8 +9,10 @@ export class AccountService {
 
     private accounts : Promise<Account[]>;
     private headers = new Headers({'Content-Type': 'application/json'});
+    private accountConnected: Account;
     constructor(private http: Http) {
         this.accounts = this.getAccounts();
+        this.accountConnected = null;
     }
 
     //Récupère les comptes via l'API
@@ -23,7 +25,7 @@ export class AccountService {
 
     //Récupère le compte identifié par id via l'API
     getAccount(id): Promise<Account> {
-        return this.http.get('/api/account/${id}')
+        return this.http.get(`/api/account/${id}`)
             .toPromise()
             .then(response => response.json().data as Account)
             .catch(this.handleError);
