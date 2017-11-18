@@ -14,11 +14,16 @@ declare var $ :any;
 export class AccountComponent implements OnInit {
   public error : {};
   public msgError : {};
+
+  //la liste des comptes existants
   private accounts : Account[];
+  //Le compte connecté
+  private accountConnected : Account;
 
   constructor(private accountService: AccountService, private router:Router) {
     this.error = {'FormLogin' : false,'FormRegister' : false};
     this.msgError = {'FormLogin' : "",'FormRegister' : ""};
+    this.accountConnected = null;
   }
   
   //Permet de récupérer les comptes via le service AccountService
@@ -74,10 +79,14 @@ export class AccountComponent implements OnInit {
       }
       //On se connecte avec bon email et bon mdp
       else{
+          //On maj le compte connecté
+          this.accountConnected = accountConnexion;
+          //On met en session l'ID
           localStorage.setItem('id', "" + accountConnexion.id);
+          //On redirige vers le tableau de bord
           this.router.navigate(["tableau-de-bord"]);
+          //Aucune erreur
           this.error['FormLogin'] = false;
-
           //On ferme la modal
           $('#logInModal').modal('hide');
           return true;
@@ -122,21 +131,36 @@ export class AccountComponent implements OnInit {
       else{
           //On demande au service de créer le compte et on l'ajoute à la liste
           this.accountService.createAccount(surname,name,mdp,email).then(account => {
+            //On renseigne le compte connecté
+            this.accountConnected = account;
+            //On met en session l'ID
             localStorage.setItem('id', "" + account.id);
+            //On ajoute a la liste des comptes, le compte crée
             this.accounts.push(account);
+            //On redirige vers le tableau de bord
             this.router.navigate(["tableau-de-bord"]);
+            //Aucune erreur sur la formulaire
             this.error['FormRegister'] = false;
             
             //On ferme la modal
             $('#registerModal').modal('hide');
             return true
           }).catch(error => {
-            this.error['FormRegister'] = true;
-            this.msgError['FormRegister'] = "Erreur à la création du compte";
-            return false;
-        });
+                this.error['FormRegister'] = true;
+                this.msgError['FormRegister'] = "Erreur à la création du compte";
+                return false;
+            });
       }
   }
+
+  public logout() : void{
+    //On met à NULL le compte connecté
+    this.accountConnected = null;
+    //On supprime l'ID en session
+    localStorage.removeItem('id');
+    //On redirige vers l'accueil
+    this.router.navigate(['']);
+  } 
 
 
   /**
@@ -149,9 +173,17 @@ export class AccountComponent implements OnInit {
       return this.msgError[form];
   }
 
-  //Il faut faire appel ici à la fonction getAccounts récupérant les comptes via les Promise
   ngOnInit() {
+      //On recupère tous les comptes
       this.getAccounts();
+
+      //On récupère le compte en session
+      if(this.accountConnected == null){
+        if(localStorage.getItem('id')){
+          this.accountService.getAccount(localStorage.getItem('id'))
+            .then(account => {this.accountConnected = account;})
+        }
+      }
   }
 
 }

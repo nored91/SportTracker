@@ -23,6 +23,10 @@ const appRoutes:Routes = [
     {
       path: 'tableau-de-bord',
       component: DashboardComponent
+    },
+    {
+      path: 'deconnexion',
+      component: DashboardComponent
     }
 ]
 

@@ -1,77 +1,92 @@
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
-  S'inscrire
-</button>
-<button type="button" class="btn btn-light" data-toggle="modal" data-target="#logInModal">
-  Se connecter
-</button>
 
-<!-- Modal s'inscrire-->
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">S'inscrire</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="form-register" (submit)="register($event)">
-          <div [hidden]="isValid('FormRegister')" class="alert alert-danger">
-              {{getMsgError('FormRegister')}}
-          </div>
+<div *ngIf="!accountConnected">
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+    S'inscrire
+  </button>
+  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#logInModal">
+    Se connecter
+  </button>
 
-          <label for="inputSurName" class="sr-only">Prénom</label>
-          <input id="inputSurName" class="form-control" placeholder="Prénom" required="" autofocus="" type="" required>
-          <br>
-          <label for="inputName" class="sr-only">Nom</label>
-          <input id="inputName" class="form-control" placeholder="Nom" required="" autofocus="" type="" required>
-          <br>
-          <label for="inputEmail" class="sr-only">Adresse E-mail</label>
-          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
-          <br>
-          <label for="inputPassword" class="sr-only">Mot de passe</label>
-          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" required>
-          <br>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Inscription</button>
-        </form>
+  <!-- Modal s'inscrire-->
+  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">S'inscrire</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-register" (submit)="register($event)">
+            <div [hidden]="isValid('FormRegister')" class="alert alert-danger">
+                {{getMsgError('FormRegister')}}
+            </div>
+
+            <label for="inputSurName" class="sr-only">Prénom</label>
+            <input id="inputSurName" class="form-control" placeholder="Prénom" required="" autofocus="" type="" required>
+            <br>
+            <label for="inputName" class="sr-only">Nom</label>
+            <input id="inputName" class="form-control" placeholder="Nom" required="" autofocus="" type="" required>
+            <br>
+            <label for="inputEmail" class="sr-only">Adresse E-mail</label>
+            <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
+            <br>
+            <label for="inputPassword" class="sr-only">Mot de passe</label>
+            <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" required>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Inscription</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Modal se connecter -->
+  <div class="modal fade" id="logInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Se connecter</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-signin" (submit)="login($event)">
+            <div [hidden]="isValid('FormLogin')" class="alert alert-danger">
+                {{getMsgError('FormLogin')}}
+            </div>
+            
+            <label for="inputEmail" class="sr-only">Adresse E-mail</label>
+            <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
+            <br>
+            <label for="inputPassword" class="sr-only">Mot de passe</label>
+            <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" required>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal se connecter -->
-<div class="modal fade" id="logInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Se connecter</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="form-signin" (submit)="login($event)">
-          <div [hidden]="isValid('FormLogin')" class="alert alert-danger">
-              {{getMsgError('FormLogin')}}
-          </div>
-          
-          <label for="inputEmail" class="sr-only">Adresse E-mail</label>
-          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" required>
-          <br>
-          <label for="inputPassword" class="sr-only">Mot de passe</label>
-          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" required>
-          <br>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-      </div>
-    </div>
-  </div>
+<div *ngIf="accountConnected">
+  <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/tableau-de-bord">Tableau de bord</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-primary" href="#" (click)="logout()" role="button">Déconnexion</a>
+      </li>
+  </ul>
+  
 </div>
