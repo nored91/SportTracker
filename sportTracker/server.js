@@ -78,7 +78,7 @@ var con = mysql.createConnection({
       else{
         if(results.length != 0){
           resultat.resultat = 'OK';
-          resultat.data = results;
+          resultat.data = results[0];
         }
         else{
           resultat.message = "Aucun compte avec cet identifiant";

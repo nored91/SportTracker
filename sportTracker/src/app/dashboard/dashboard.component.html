@@ -1,7 +1,12 @@
 <div class="jumbotron" *ngIf="account">
   <div class="container">
-    <h1 class="display-3">Tableau de bord : {{ account.name }} {{ account.surname }} </h1>
+    <h1 class="display-3">Tableau de bord</h1>
+    <h2>Bienvenue sur votre compte {{account.name}} {{account.surname}} </h2>
   </div>
 </div>
 <div class="container">
+  <h3>Vos informations</h3>
+  <p>Nom : {{account.name}}</p>
+  <p>Prénom : {{account.surname}}</p>
+  <p>Email : {{account.email}}</p>
 </div>

@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
 
   public account : Account;
   constructor(private accountService: AccountService, private router:Router) {
-    this.account = new Account();
+    this.account = null;
   }
   
 
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     if(this.account == null){
       if(localStorage.getItem('id')){
         this.accountService.getAccount(localStorage.getItem('id'))
-          .then(account => {this.account = account})
+          .then(account => {this.account = account;})
           .catch(function(){
             //Si on a pas de compte connecté => on redirige sur l'accueil
             this.router.navigate([""]);
