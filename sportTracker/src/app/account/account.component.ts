@@ -17,6 +17,11 @@ export class AccountComponent implements OnInit {
     public error : {};
     public msgError : {};
 
+    //MS = 2M
+    private timeSession = 3600000;
+    //MS = 1M
+    private timeCheckSession = 60000;
+
     //la liste des comptes existants
     private accounts : Account[];
     //Le compte connecté
@@ -194,9 +199,8 @@ export class AccountComponent implements OnInit {
             var token = localStorage.getItem('token');
 
             var timeNow = Date.now();
-            //1 heure en MicroSecondes
-            var timeSession = 60*1000000;
-            //Si session expiré
+            //1 heure en Milisecondes
+            var timeSession = this.timeSession;
             if((timeNow - timeSession) > parseInt(time)){
                 console.log("expiration session > 1h");
                 error = true;
@@ -234,6 +238,8 @@ export class AccountComponent implements OnInit {
         this.removeSession();
         //On redirige vers l'accueil
         this.router.navigate(['']);
+        //On force le raffraichissement de la page
+        //window.location.reload()
     } 
 
 
@@ -251,8 +257,14 @@ export class AccountComponent implements OnInit {
         //On recupère tous les comptes
         this.getAccounts();
 
-        //On récupère le compte en session et on vérifie la session
         this.getSession();
-    }
 
+        //on check toutes les minutes
+        setInterval(() => {
+            if(this.accountConnected != null){
+                this.getSession();
+            }
+            
+        }, this.timeCheckSession);
+    }
 }
