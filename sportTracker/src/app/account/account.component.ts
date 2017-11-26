@@ -18,7 +18,7 @@ export class AccountComponent implements OnInit {
     public msgError : {};
 
     //MS = 2M
-    private timeSession = 3600000;
+    private timeSession = 1200000;
     //MS = 1M
     private timeCheckSession = 60000;
 
@@ -194,6 +194,7 @@ export class AccountComponent implements OnInit {
         var result = null;
         if(localStorage.getItem('id')){
             var error = false;
+            var msgError = "";
             var id = localStorage.getItem('id');
             var time = localStorage.getItem('time');
             var token = localStorage.getItem('token');
@@ -202,12 +203,12 @@ export class AccountComponent implements OnInit {
             //1 heure en Milisecondes
             var timeSession = this.timeSession;
             if((timeNow - timeSession) > parseInt(time)){
-                console.log("expiration session > 1h");
+                msgError = "Votre session à expiré";
                 error = true;
             }
 
             //On vérifie la validité de la session
-            if((id) && (time) && (token)){
+            if(!error && (id) && (time) && (token)){
                 this.accountService.getAccount(id)
                 .then(account => {
                     this.accountConnected = account;
@@ -215,7 +216,7 @@ export class AccountComponent implements OnInit {
                     this.accountService.getTokenAccount(infoToken)
                     .then(tokenSent => {
                         if(tokenSent != token){
-                            console.log("Invalidité token");
+                            msgError = "Votre session n'est plus valide";
                             error = true;
                         }
                     })
@@ -224,22 +225,25 @@ export class AccountComponent implements OnInit {
 
             //On déconnecte l'utilisateur si les conditions ne sont pas remplis
             if(error){
-                this.logout();
+                this.logout(msgError);
             }
         }
     }
 
     //On déconnecte l'utilisateur courant
-    public logout() : void{
-        $('#loggoutModal').modal();
+    public logout(msg = "") : void{
+        if(msg != ""){
+            $('#loggoutModal p').text(msg);
+        }
+        
         //On met à NULL le compte connecté
         this.accountConnected = null;
         //On supprime la session
         this.removeSession();
         //On redirige vers l'accueil
         this.router.navigate(['']);
-        //On force le raffraichissement de la page
-        //window.location.reload()
+
+        $('#loggoutModal').modal();
     } 
 
 
@@ -256,8 +260,6 @@ export class AccountComponent implements OnInit {
     ngOnInit() {
         //On recupère tous les comptes
         this.getAccounts();
-
-        this.getSession();
 
         //on check toutes les minutes
         setInterval(() => {
