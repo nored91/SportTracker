@@ -10,6 +10,7 @@ import { RouterModule, Routes }   from '@angular/router';
 import { DetailsComponent } from './details/details.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AccountFormComponent } from './account-form/account-form.component';
 
 const appRoutes:Routes = [
     {
@@ -21,8 +22,16 @@ const appRoutes:Routes = [
       component: HomeComponent
     },
     {
+      path: 'accueil',
+      component: HomeComponent
+    },
+    {
       path: 'tableau-de-bord',
       component: DashboardComponent
+    },
+    {
+      path: 'modifier-mon-compte',
+      component: AccountFormComponent
     }
 ]
 
@@ -32,7 +41,8 @@ const appRoutes:Routes = [
     AccountComponent,
     DetailsComponent,
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    AccountFormComponent
   ],
   imports: [
     BrowserModule,

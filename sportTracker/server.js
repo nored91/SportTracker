@@ -72,6 +72,30 @@ app.post('/api/account/create', function (req, res) {
   });
 });
 
+//Met à jour un compte en BDD avec les valeurs transmises
+app.post('/api/account/update', function (req, res) {
+  var resultat = {resultat : 'NOK', data : null, message : ''};
+  var id = null;
+
+  //Nouveau mdp à hasher
+  if(req.body.isMdpChange){
+    req.body.mdp = hash.sha256().update(req.body.mdp).digest('hex');
+  }
+
+  //On insère les valeurs
+  con.query("UPDATE account SET name = ?, surname = ?, email = ?, mdp = ? where id = ?",[req.body.name,req.body.surname,req.body.email,req.body.mdp,req.body.id], function (error, results, fields) {
+    if (error){
+      resultat.message = error;
+      res.json(resultat);
+    } 
+    else{
+      resultat.data = req.body;
+      resultat.resultat = 'OK';
+      res.json(resultat);
+    }
+  });
+});
+
 //Récupère le compte en BDD via l'ID transmis
 app.get('/api/account/:id', function (req, res) {
   var resultat = {resultat : 'NOK', data : null, message : ''};

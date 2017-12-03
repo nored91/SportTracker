@@ -16,7 +16,6 @@ export class DashboardComponent implements OnInit {
     this.account = null;
   }
   
-
   ngOnInit() {
     //On récupère le compte connecté via le service
     if(this.account == null){
@@ -25,12 +24,12 @@ export class DashboardComponent implements OnInit {
           .then(account => {this.account = account;})
           .catch(function(){
             //Si on a pas de compte connecté => on redirige sur l'accueil
-            this.router.navigate([""]);
+            this.router.navigate(["accueil"]);
           });
       }
       else{
         //Si on a pas de compte connecté => on redirige sur l'accueil
-        this.router.navigate([""]);
+        this.router.navigate(["accueil"]);
       }
     }
   }

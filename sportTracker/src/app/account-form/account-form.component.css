@@ -1,0 +1,25 @@
+.container{
+    padding:50px;
+}
+.containerLeft{
+    width:65%;
+    margin-right:2%;
+    float:left;
+}
+.containerRight{
+    width:30%;
+    float:left;
+    border-left:1px solid gray;
+}
+.containerRight .bloc{
+    margin-bottom:50px;
+}
+
+.validationForm .alert, .validationForm > button{
+    float:left;
+}
+.validationForm .alert{
+    display: none;
+    padding:5px;
+    margin-left:5px;
+}

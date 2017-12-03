@@ -33,12 +33,6 @@ export class AccountComponent implements OnInit {
     this.accountConnected = null;
     }
 
-    //Permet de récupérer les comptes via le service AccountService
-    private getAccounts(): void{
-    this.accountService.getAccounts().then(accounts => this.accounts = accounts);
-
-    }
-
     //Sert a la méthode verfyLoginMdp
     private findEmail(obj,val) : boolean{
     return obj.email === val;
@@ -64,43 +58,48 @@ export class AccountComponent implements OnInit {
 
     //On vient chercher à se logguer
     public login(e){
-        e.preventDefault();
-        var email = e.target.elements[0].value;
-        var mdp = e.target.elements[1].value;
-        if(!email){
-            this.error['FormLogin'] = true;
-            this.msgError['FormLogin'] = "L'adresse email est vide";
-            return false;
-        }
-        if(!mdp){
-            this.error['FormLogin'] = true;
-            this.msgError['FormLogin'] = "Aucun mot de passe de rempli";
-            return false;
-        }
+        //On récupère les comptes
+        this.accountService.getAccounts().then(
+            accounts => {
+                this.accounts = accounts
+                e.preventDefault();
+                var email = e.target.elements[0].value;
+                var mdp = e.target.elements[1].value;
+                if(!email){
+                    this.error['FormLogin'] = true;
+                    this.msgError['FormLogin'] = "L'adresse email est vide";
+                    return false;
+                }
+                if(!mdp){
+                    this.error['FormLogin'] = true;
+                    this.msgError['FormLogin'] = "Aucun mot de passe de rempli";
+                    return false;
+                }
 
-        //On récupère le hash sha256 du mdp et on cherche les comptes correspondants
-        this.accountService.getHash(mdp).then(mdp => {
-            var accountConnexion = this.verifyLoginMdp(email,mdp);
-            if(accountConnexion == null){
-                this.error['FormLogin'] = true;
-                this.msgError['FormLogin'] = "Mauvais identifiants ou le compte n'existe pas";
-                return false;
-                
-            }
-            //On se connecte avec bon email et bon mdp
-            else{
-                //On maj le compte connecté
-                this.accountConnected = accountConnexion;
-                //On met en session l'ID
-                this.saveSession(accountConnexion.id);
-                //On redirige vers le tableau de bord
-                this.router.navigate(["tableau-de-bord"]);
-                //Aucune erreur
-                this.error['FormLogin'] = false;
-                //On ferme la modal
-                $('#logInModal').modal('hide');
-                return true;
-            }
+                //On récupère le hash sha256 du mdp et on cherche les comptes correspondants
+                this.accountService.getHash(mdp).then(mdp => {
+                    var accountConnexion = this.verifyLoginMdp(email,mdp);
+                    if(accountConnexion == null){
+                        this.error['FormLogin'] = true;
+                        this.msgError['FormLogin'] = "Mauvais identifiants ou le compte n'existe pas";
+                        return false;
+                        
+                    }
+                    //On se connecte avec bon email et bon mdp
+                    else{
+                        //On maj le compte connecté
+                        this.accountConnected = accountConnexion;
+                        //On met en session l'ID
+                        this.saveSession(accountConnexion.id);
+                        //On redirige vers le tableau de bord
+                        this.router.navigate(["tableau-de-bord"]);
+                        //Aucune erreur
+                        this.error['FormLogin'] = false;
+                        //On ferme la modal
+                        $('#logInModal').modal('hide');
+                        return true;
+                    }
+                });
         });
     }
 
@@ -262,8 +261,7 @@ export class AccountComponent implements OnInit {
     }
 
     ngOnInit() {
-        //On recupère tous les comptes
-        this.getAccounts();
+        this.getSession();
 
         //on check toutes les minutes
         setInterval(() => {

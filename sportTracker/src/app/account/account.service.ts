@@ -31,6 +31,13 @@ export class AccountService {
             .catch(this.handleError);
     }
 
+    updateAccount(account : Account, isMdpChange : Boolean): Promise<Account> {
+        return this.http.post("/api/account/update", JSON.stringify({id:account.id,surname:account.surname,name:account.name,mdp:account.mdp,email:account.email,isMdpChange:isMdpChange}), {headers: this.headers})
+        .toPromise()
+        .then(response => response.json().data as Account)
+        .catch(this.handleError);
+    }
+
     //Crée le compte et renvoi le compte créé
     createAccount(surname,name,mdp,email): Promise<Account> {
         return this.http.post("/api/account/create", JSON.stringify({surname:surname,name:name,mdp:mdp,email:email}), {headers: this.headers})
