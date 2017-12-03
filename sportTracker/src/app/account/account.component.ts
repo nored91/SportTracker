@@ -77,27 +77,31 @@ export class AccountComponent implements OnInit {
             this.msgError['FormLogin'] = "Aucun mot de passe de rempli";
             return false;
         }
-        var accountConnexion = this.verifyLoginMdp(email,mdp);
-        if(accountConnexion == null){
-            this.error['FormLogin'] = true;
-            this.msgError['FormLogin'] = "Mauvais identifiants ou le compte n'existe pas";
-            return false;
-            
-        }
-        //On se connecte avec bon email et bon mdp
-        else{
-            //On maj le compte connecté
-            this.accountConnected = accountConnexion;
-            //On met en session l'ID
-            this.saveSession(accountConnexion.id);
-            //On redirige vers le tableau de bord
-            this.router.navigate(["tableau-de-bord"]);
-            //Aucune erreur
-            this.error['FormLogin'] = false;
-            //On ferme la modal
-            $('#logInModal').modal('hide');
-            return true;
-        }
+
+        //On récupère le hash sha256 du mdp et on cherche les comptes correspondants
+        this.accountService.getHash(mdp).then(mdp => {
+            var accountConnexion = this.verifyLoginMdp(email,mdp);
+            if(accountConnexion == null){
+                this.error['FormLogin'] = true;
+                this.msgError['FormLogin'] = "Mauvais identifiants ou le compte n'existe pas";
+                return false;
+                
+            }
+            //On se connecte avec bon email et bon mdp
+            else{
+                //On maj le compte connecté
+                this.accountConnected = accountConnexion;
+                //On met en session l'ID
+                this.saveSession(accountConnexion.id);
+                //On redirige vers le tableau de bord
+                this.router.navigate(["tableau-de-bord"]);
+                //Aucune erreur
+                this.error['FormLogin'] = false;
+                //On ferme la modal
+                $('#logInModal').modal('hide');
+                return true;
+            }
+        });
     }
 
     public register(e){

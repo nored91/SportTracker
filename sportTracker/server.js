@@ -52,6 +52,11 @@ app.get('/api/account/list', function (req, res) {
 app.post('/api/account/create', function (req, res) {
   var resultat = {resultat : 'NOK', data : null, message : ''};
   var id = null;
+
+  //On hash le mot de passe en sha256
+  req.body.mdp = hash.sha256().update(req.body.mdp).digest('hex');
+
+  //On insère les valeurs
   con.query('INSERT INTO account SET ?', req.body, function (error, results, fields) {
     if (error){
       resultat.message = error;

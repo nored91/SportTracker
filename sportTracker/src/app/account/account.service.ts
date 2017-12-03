@@ -39,9 +39,14 @@ export class AccountService {
             .catch(this.handleError);
     }
 
-    //Recupère le hash sha256 de la valeur envoyé
+    //Recupère le hash sha256 de la valeur envoyé pour le token
     getTokenAccount(infoToken) : Promise<string>{
-        return this.http.post("/api/hash", JSON.stringify({data:infoToken}), {headers: this.headers})
+        return this.getHash(infoToken);
+    }
+
+    //Recupère le hash sha256 de la valeur envoyé
+    getHash(info) : Promise<string>{
+        return this.http.post("/api/hash", JSON.stringify({data:info}), {headers: this.headers})
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError);
