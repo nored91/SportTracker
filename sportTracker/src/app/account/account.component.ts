@@ -87,17 +87,25 @@ export class AccountComponent implements OnInit {
                     }
                     //On se connecte avec bon email et bon mdp
                     else{
-                        //On maj le compte connecté
-                        this.accountConnected = accountConnexion;
-                        //On met en session l'ID
-                        this.saveSession(accountConnexion.id);
-                        //On redirige vers le tableau de bord
-                        this.router.navigate(["tableau-de-bord"]);
-                        //Aucune erreur
-                        this.error['FormLogin'] = false;
-                        //On ferme la modal
-                        $('#logInModal').modal('hide');
-                        return true;
+                        //Le compte n'est pas validé
+                        if(!accountConnexion.verify){
+                            this.error['FormLogin'] = true;
+                            this.msgError['FormLogin'] = "Le compte n'a pas encore été validé";
+                            return false;
+                        }
+                        else{
+                            //On maj le compte connecté
+                            this.accountConnected = accountConnexion;
+                            //On met en session l'ID
+                            this.saveSession(accountConnexion.id);
+                            //On redirige vers le tableau de bord
+                            this.router.navigate(["tableau-de-bord"]);
+                            //Aucune erreur
+                            this.error['FormLogin'] = false;
+                            //On ferme la modal
+                            $('#logInModal').modal('hide');
+                            return true;
+                        }
                     }
                 });
         });

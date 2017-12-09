@@ -4,6 +4,7 @@ export class Account {
     surname: string;
     mdp: string;
     email: string;
+    verify: boolean;
 
     //Retourne le nom complet
     public getFullName() : String {
