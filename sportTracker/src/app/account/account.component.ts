@@ -16,6 +16,8 @@ declare var $ :any;
 export class AccountComponent implements OnInit {
     public error : {};
     public msgError : {};
+    public msg : {};
+    public msgInfo : {};
 
     //MS = 24h
     private timeSession = 86400000;
@@ -28,9 +30,11 @@ export class AccountComponent implements OnInit {
     private accountConnected : Account;
 
     constructor(private accountService: AccountService, private router:Router) {
-    this.error = {'FormLogin' : false,'FormRegister' : false};
-    this.msgError = {'FormLogin' : "",'FormRegister' : ""};
-    this.accountConnected = null;
+        this.error = {'FormLogin' : false,'FormRegister' : false};
+        this.msgError = {'FormLogin' : "",'FormRegister' : ""};
+        this.msg = {'FormLogin' : false,'FormRegister' : false};
+        this.msgInfo = {'FormLogin' : "",'FormRegister' : ""};
+        this.accountConnected = null;
     }
 
     //Sert a la méthode verfyLoginMdp
@@ -58,11 +62,11 @@ export class AccountComponent implements OnInit {
 
     //On vient chercher à se logguer
     public login(e){
+        e.preventDefault();
         //On récupère les comptes
         this.accountService.getAccounts().then(
             accounts => {
                 this.accounts = accounts
-                e.preventDefault();
                 var email = e.target.elements[0].value;
                 var mdp = e.target.elements[1].value;
                 if(!email){
@@ -112,63 +116,63 @@ export class AccountComponent implements OnInit {
     }
 
     public register(e){
+        this.msg['FormRegister'] = false;
+        this.error['FormRegister'] = false;
         e.preventDefault();
-        var surname = e.target.elements[0].value;
-        var name = e.target.elements[1].value;
-        var email = e.target.elements[2].value;
-        var mdp = e.target.elements[3].value;
+        //On récupère les comptes
+        this.accountService.getAccounts().then(
+            accounts => {
+                this.accounts = accounts
+                var surname = e.target.elements[0].value;
+                var name = e.target.elements[1].value;
+                var email = e.target.elements[2].value;
+                var mdp = e.target.elements[3].value;
 
-        if(!surname){
-            this.error['FormRegister'] = true;
-            this.msgError['FormRegister'] = "Le champ prénom est vide";
-            return false;
-        }
-        if(!name){
-            this.error['FormRegister'] = true;
-            this.msgError['FormRegister'] = "Le champ nom est vide";
-            return false;
-        }
-        if(!email){
-            this.error['FormRegister'] = true;
-            this.msgError['FormRegister'] = "L'adresse email est vide";
-            return false;
-        }
-        if(!mdp){
-            this.error['FormRegister'] = true;
-            this.msgError['FormRegister'] = "Aucun mot de passe de rempli";
-            return false;
-        }
+                if(!surname){
+                    this.error['FormRegister'] = true;
+                    this.msgError['FormRegister'] = "Le champ prénom est vide";
+                    return false;
+                }
+                else if(!name){
+                    this.error['FormRegister'] = true;
+                    this.msgError['FormRegister'] = "Le champ nom est vide";
+                    return false;
+                }
+                else if(!email){
+                    this.error['FormRegister'] = true;
+                    this.msgError['FormRegister'] = "L'adresse email est vide";
+                    return false;
+                }
+                else if(!mdp){
+                    this.error['FormRegister'] = true;
+                    this.msgError['FormRegister'] = "Aucun mot de passe de rempli";
+                    return false;
+                }
 
-        if(this.emailalreadyExist(email)){
-        this.error['FormRegister'] = true;
-        this.msgError['FormRegister'] = "L'adresse email est déjà liée à un compte";
-        return false;
-            
-        }
-        //On se connecte avec bon email et bon mdp
-        else{
-            //On demande au service de créer le compte et on l'ajoute à la liste
-            this.accountService.createAccount(surname,name,mdp,email).then(account => {
-                //On renseigne le compte connecté
-                this.accountConnected = account;
-                //On ajoute a la liste des comptes, le compte crée
-                this.accounts.push(account);
-                //On met en session l'ID
-                this.saveSession(account.id);
-                //On redirige vers le tableau de bord
-                this.router.navigate(["tableau-de-bord"]);
-                //Aucune erreur sur la formulaire
-                this.error['FormRegister'] = false;
-                
-                //On ferme la modal
-                $('#registerModal').modal('hide');
-                return true
-            }).catch(error => {
-                this.error['FormRegister'] = true;
-                this.msgError['FormRegister'] = "Erreur à la création du compte";
-                return false;
-            });
-        }
+                if(this.emailalreadyExist(email)){
+                    this.error['FormRegister'] = true;
+                    this.msgError['FormRegister'] = "L'adresse email est déjà liée à un compte";
+                    return false;
+                }
+                //On se connecte avec bon email et bon mdp
+                else{
+                    //On demande au service de créer le compte et on l'ajoute à la liste
+                    this.accountService.createAccount(surname,name,mdp,email).then(account => {
+
+                        //On ajoute a la liste des comptes, le compte crée
+                        this.accounts.push(account);
+
+                        //Aucune erreur sur la formulaire
+                        this.msg['FormRegister'] = true;
+                        this.msgInfo['FormRegister'] = "Votre compté à été crée, un administrateur va valider votre compte";
+                        return false;
+                    }).catch(error => {
+                        this.error['FormRegister'] = true;
+                        this.msgError['FormRegister'] = "Erreur à la création du compte";
+                        return false;
+                    });
+                }
+        });
     }
 
     private findID(account,id) : boolean{
@@ -264,8 +268,18 @@ export class AccountComponent implements OnInit {
     public isValid(form){
         return !this.error[form];
     }
-        public getMsgError(form){
+    public getMsgError(form){
         return this.msgError[form];
+    }
+
+    /**
+     * Si le formulaire a des informations à afficher
+     */
+    public isInfo(form){
+        return !this.msg[form];
+    }
+    public getMsgInfo(form){
+        return this.msgInfo[form];
     }
 
     ngOnInit() {

@@ -7,9 +7,14 @@
   </div>
   <div class="container">
     <h3>Vos informations</h3>
+    <p>Type de compte : {{ account.getType }}</p>
     <p>Nom : {{account.name}}</p>
     <p>Prénom : {{account.surname}}</p>
     <p>Email : {{account.email}}</p>
     <a class="btn btn-primary" href="#" routerLink="/modifier-mon-compte">Modifier mes informations</a>
+  </div>
+  <br>
+  <div *ngIf="account.rights" class="container">
+    <a class="btn btn-primary" href="#" routerLink="/administrer-les-comptes">Voir les comptes</a>
   </div>
 </div>

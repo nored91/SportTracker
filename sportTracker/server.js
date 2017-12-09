@@ -83,7 +83,7 @@ app.post('/api/account/update', function (req, res) {
   }
 
   //On insère les valeurs
-  con.query("UPDATE account SET name = ?, surname = ?, email = ?, mdp = ? , verify = ? where id = ?",[req.body.name,req.body.surname,req.body.email,req.body.mdp,req.body.verify,req.body.id], function (error, results, fields) {
+  con.query("UPDATE account SET name = ?, surname = ?, email = ?, mdp = ? , verify = ? , rights = ? where id = ?",[req.body.name,req.body.surname,req.body.email,req.body.mdp,req.body.verify,req.body.id,req.body.rights], function (error, results, fields) {
     if (error){
       resultat.message = error;
       res.json(resultat);

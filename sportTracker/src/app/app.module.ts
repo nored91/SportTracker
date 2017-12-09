@@ -32,6 +32,10 @@ const appRoutes:Routes = [
     {
       path: 'modifier-mon-compte',
       component: AccountFormComponent
+    },
+    {
+      path: 'administrer-les-comptes',
+      component: DetailsComponent
     }
 ]
 

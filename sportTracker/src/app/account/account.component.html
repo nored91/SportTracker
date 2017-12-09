@@ -42,6 +42,9 @@
             <div [hidden]="isValid('FormRegister')" class="alert alert-danger">
                 {{getMsgError('FormRegister')}}
             </div>
+            <div [hidden]="isInfo('FormRegister')" class="alert alert-success">
+                {{getMsgInfo('FormRegister')}}
+            </div>
 
             <label for="inputSurName" class="sr-only">Prénom</label>
             <input id="inputSurName" class="form-control" placeholder="Prénom" required="" autofocus="" type="" required>
