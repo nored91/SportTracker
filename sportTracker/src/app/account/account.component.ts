@@ -17,8 +17,8 @@ export class AccountComponent implements OnInit {
     public error : {};
     public msgError : {};
 
-    //MS = 2M
-    private timeSession = 1200000;
+    //MS = 24h
+    private timeSession = 86400000;
     //MS = 1M
     private timeCheckSession = 60000;
 
@@ -193,7 +193,7 @@ export class AccountComponent implements OnInit {
     }
 
     //Récupère l'utilisateur connecté, déconnecte l'utilisateur si la session est invalide ou expiré
-    private getSession() : void{
+    private getSession() : void {
         var result = null;
         if(localStorage.getItem('id')){
             var error = false;
