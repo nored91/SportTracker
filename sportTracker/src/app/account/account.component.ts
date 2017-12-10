@@ -235,6 +235,8 @@ export class AccountComponent implements OnInit {
                             error = true;
                         }
                     })
+                }).catch(error => {
+                    this.accountConnected = null;
                 })
             }
 

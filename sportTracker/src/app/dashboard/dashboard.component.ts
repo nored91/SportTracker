@@ -15,6 +15,31 @@ export class DashboardComponent implements OnInit {
   constructor(private accountService: AccountService, private router:Router) {
     this.account = null;
   }
+
+  //Retourne le nom complet
+  public getFullName() : String {
+    return "" +
+    this.account.surname.charAt(0).toUpperCase() + this.account.surname.toLowerCase().substring(1)
+    + " " 
+    + this.account.name.charAt(0).toUpperCase() + this.account.name.toLowerCase().substring(1);
+  }
+  
+  //Retourne le type de compte
+  public getType() : String {
+    var resultat = "";
+    switch(this.account.rights){
+        case 0 : 
+            resultat = "Compte SMT";
+            break;
+        case 1 :
+            resultat = "Administrateur";
+            break;
+        default : 
+            resultat = "";
+            break;
+    }
+    return resultat;
+  }
   
   ngOnInit() {
     //On récupère le compte connecté via le service
@@ -33,5 +58,4 @@ export class DashboardComponent implements OnInit {
       }
     }
   }
-
 }

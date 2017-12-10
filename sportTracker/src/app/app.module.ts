@@ -11,6 +11,7 @@ import { DetailsComponent } from './details/details.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccountFormComponent } from './account-form/account-form.component';
+import { AccountListComponent } from './account-list/account-list.component';
 
 const appRoutes:Routes = [
     {
@@ -35,7 +36,7 @@ const appRoutes:Routes = [
     },
     {
       path: 'administrer-les-comptes',
-      component: DetailsComponent
+      component: AccountListComponent
     }
 ]
 
@@ -46,7 +47,8 @@ const appRoutes:Routes = [
     DetailsComponent,
     HomeComponent,
     DashboardComponent,
-    AccountFormComponent
+    AccountFormComponent,
+    AccountListComponent
   ],
   imports: [
     BrowserModule,

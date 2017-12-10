@@ -16,8 +16,8 @@ export class AccountService {
     }
 
     //Récupère les comptes via l'API
-    getAccounts(): Promise<Account[]> {
-        return this.http.get("/api/account/list")
+    getAccounts(filter = "",orderby = ""): Promise<Account[]> {
+        return this.http.post("/api/account/list",JSON.stringify({filter:filter,orderby:orderby}), {headers: this.headers})
             .toPromise()
             .then(response => response.json().data as Account[])
             .catch(this.handleError);
@@ -31,10 +31,17 @@ export class AccountService {
             .catch(this.handleError);
     }
 
-    updateAccount(account : Account, isMdpChange : Boolean): Promise<Account> {
-        return this.http.post("/api/account/update", JSON.stringify({id:account.id,surname:account.surname,name:account.name,mdp:account.mdp,email:account.email,isMdpChange:isMdpChange}), {headers: this.headers})
+    updateAccount(account : Account, isMdpChange = false): Promise<Account> {
+        return this.http.post("/api/account/update", JSON.stringify({id:account.id,surname:account.surname,name:account.name,mdp:account.mdp,email:account.email,isMdpChange:isMdpChange,rights:account.rights,verify:account.verify}), {headers: this.headers})
         .toPromise()
         .then(response => response.json().data as Account)
+        .catch(this.handleError);
+    }
+
+    deleteAccount(account : Account): Promise<Boolean> {
+        return this.http.post("/api/account/delete", JSON.stringify({id:account.id}), {headers: this.headers})
+        .toPromise()
+        .then(response => (response.json().resultat == 'OK') as Boolean)
         .catch(this.handleError);
     }
 

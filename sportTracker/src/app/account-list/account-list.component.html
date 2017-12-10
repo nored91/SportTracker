@@ -1,0 +1,36 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">Administration des comptes</h1>
+    <h2>Liste des comptes de SMT</h2>
+  </div>
+</div>
+<div class="container">
+  <div class="container container-list">
+    <ul class="list-group">
+      <li *ngFor="let account of listaccount" 
+        class="list-group-item"
+        [class.active]="account === accountSelected"
+        (click)="onSelect(account)">
+        <span>{{ getFullName(account)}}</span>
+        <span *ngIf="account.rights == 1" class="badge badge-success">Admin</span>
+        <span *ngIf="account.verify != 1" class="badge badge-warning">A valider</span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="accountSelected" class="container container-details">
+      <div class="left">
+        <h3> {{ getFullName(accountSelected) }} </h3>
+        <p>Type de compte : {{ getType(accountSelected) }}</p>
+        <p>Email : {{accountSelected.email}}</p>
+
+        <p class="action">
+          <a (click)="delete($event,accountSelected)" *ngIf="accountSelected.rights == 0" class="btn btn-danger" href="#">Supprimer le compte</a>
+          <a (click)="verify($event,accountSelected)" *ngIf="!accountSelected.verify" class="btn btn-success" href="#">Valider le compte</a>
+        </p>
+      </div>
+      <div class="right">
+          <img src="./assets/images/no_picture.png" alt="account picture" class="img-thumbnail">
+      </div>
+  </div>
+</div>

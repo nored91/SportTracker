@@ -20,11 +20,18 @@ app.get('/api', function (req, res) {
 });
 
 //Liste les comptes en BDD
-app.get('/api/account/list', function (req, res) {
+app.post('/api/account/list', function (req, res) {
 
   var resultat = {resultat : 'NOK', data : [], message : ''};
   var reqSql = "SELECT * FROM account";
 
+  if(req.body.filter != ""){
+    reqSql = reqSql + " WHERE " + req.body.filter;
+  }
+  if(req.body.orderby != ""){
+    reqSql = reqSql + " ORDER BY " + req.body.orderby;
+  }
+  
   con.query(reqSql, function (err, result) {
     //Si on a une erreur lors de l'execution de la requête
     if (err) {
@@ -83,7 +90,7 @@ app.post('/api/account/update', function (req, res) {
   }
 
   //On insère les valeurs
-  con.query("UPDATE account SET name = ?, surname = ?, email = ?, mdp = ? , verify = ? , rights = ? where id = ?",[req.body.name,req.body.surname,req.body.email,req.body.mdp,req.body.verify,req.body.id,req.body.rights], function (error, results, fields) {
+  con.query("UPDATE account SET name = ?, surname = ?, email = ?, mdp = ? , verify = ? , rights = ? where id = ?",[req.body.name,req.body.surname,req.body.email,req.body.mdp,req.body.verify,req.body.rights,req.body.id], function (error, results, fields) {
     if (error){
       resultat.message = error;
       res.json(resultat);
@@ -95,6 +102,25 @@ app.post('/api/account/update', function (req, res) {
     }
   });
 });
+
+//Met à jour un compte en BDD avec les valeurs transmises
+app.post('/api/account/delete', function (req, res) {
+  var resultat = {resultat : 'NOK', data : null, message : ''};
+  var id = null;
+
+  //On supprime le compte
+  con.query("DELETE FROM account WHERE id = ?",[req.body.id], function (error, results, fields) {
+    if (error){
+      resultat.message = error;
+      res.json(resultat);
+    } 
+    else{
+      resultat.resultat = 'OK';
+      res.json(resultat);
+    }
+  });
+});
+
 
 //Récupère le compte en BDD via l'ID transmis
 app.get('/api/account/:id', function (req, res) {
