@@ -6,15 +6,46 @@
     </div>
   </div>
   <div class="container">
-    <h3>Vos informations</h3>
-    <p>Type de compte : {{ getType() }}</p>
-    <p>Nom : {{account.name}}</p>
-    <p>Prénom : {{account.surname}}</p>
-    <p>Email : {{account.email}}</p>
-    <a class="btn btn-primary" href="#" routerLink="/modifier-mon-compte">Modifier mes informations</a>
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <div class="bloc">
+          <div>
+            <h3>Vos informations</h3>
+            <p>Type de compte : {{ getType() }}</p>
+            <p>Nom : {{account.name}}</p>
+            <p>Prénom : {{account.surname}}</p>
+            <p>Email : {{account.email}}</p>
+            <a class="btn btn-primary" href="#" routerLink="/modifier-mon-compte">Modifier mes informations</a>
+          </div>
+          <div>
+              <img src="./assets/images/no_picture.png" alt="account picture" class="img-thumbnail">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="account.rights" class="col-6 col-md-4">
+          <div class="bloc">
+            <div class="container">
+              <h3>Administrateur</h3>
+                <p><a class="btn btn-primary" href="#" routerLink="/administrer-les-comptes">Lister les comptes</a></p>
+            </div>
+          </div>
+      </div>
+    </div>
+    
+    <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+    <div class="row">
+      <div class="col-6 col-md-4"></div>
+      <div class="col-6 col-md-4"></div>
+      <div class="col-6 col-md-4"></div>
+    </div>
+    
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row">
+      <div class="col-6"></div>
+      <div class="col-6"></div>
+    </div>
+    
   </div>
   <br>
-  <div *ngIf="account.rights" class="container">
-    <a class="btn btn-primary" href="#" routerLink="/administrer-les-comptes">Voir les comptes</a>
-  </div>
+  
 </div>
