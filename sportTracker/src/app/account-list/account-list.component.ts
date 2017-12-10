@@ -101,6 +101,19 @@ export class AccountListComponent implements OnInit {
     });
   }
 
+  public search(e: Event){
+    var val = $('#searchAccount').val();
+    val = val.replace(new RegExp('\'', 'g'), "");
+    val = val.replace(new RegExp('\"', 'g'), "");
+    var filter = ' name like "%' + val + '%" or surname like "%' + val + '%" or email like "%' + val + '%"';
+    //On récupère la liste de compte
+    this.accountService.getAccounts(filter,"rights desc, verify asc").then(
+      accounts => {
+          this.listaccount = accounts
+      }
+    );
+  }
+
   //Affiche une alerte bootstrap qui s'enlève au bout de 5 secondes
   public showalert(message,alerttype) {
       var time = Date.now();
