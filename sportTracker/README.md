@@ -1,10 +1,17 @@
+#Trello
+https://trello.com/b/jL14bk8H/sport-motivation-tracker-phase-1-base-et-compte
+
 # SportTracker
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` --proxy-config proxy-conf.json dev server. Navigate to `http://localhost:4200/`.
+
+## Node
+
+Run `node server.js` Navigate to `http://localhost:3000/`.
 
 ## Code scaffolding
 
