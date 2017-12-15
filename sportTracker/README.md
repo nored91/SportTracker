@@ -11,7 +11,7 @@ Run `ng serve` --proxy-config proxy-conf.json dev server. Navigate to `http://lo
 
 ## Node
 
-Run `node server.js` Navigate to `http://localhost:3000/`. 
+Run `node server.js` Navigate to `http://localhost:3000/`.
 
 ## Code scaffolding
 
