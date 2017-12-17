@@ -6,4 +6,5 @@ export class Account {
     email: string;
     verify: boolean;
     rights: number;
+    photo: string;
 }

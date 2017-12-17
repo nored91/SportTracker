@@ -6,6 +6,12 @@
     margin-right:2%;
     float:left;
 }
+.containerLeft .bloc{
+    margin-bottom:50px;
+    clear:both;
+    margin-top:15px;
+}
+
 .containerRight{
     width:30%;
     float:left;
@@ -18,8 +24,22 @@
 .validationForm .alert, .validationForm > button{
     float:left;
 }
-.validationForm .alert{
-    display: none;
-    padding:5px;
+.validationForm .containerAlert{
     margin-left:5px;
+    position:relative;
+    float:left;
+    width:70%;
+    height:38px;
+}
+.containerRight .containerAlert{
+    width:100%;
+    margin-top:10px;
+}
+#imgAccount{
+    float:right;
+    position:relative;
+    width:100px;
+}
+#formAccount{
+    clear:both;
 }

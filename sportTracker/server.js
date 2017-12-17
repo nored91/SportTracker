@@ -3,9 +3,11 @@ const app = express();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var hash = require('hash.js')
+const fileUpload = require('express-fileupload');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
   
 var con = mysql.createConnection({
   host     : 'localhost',
@@ -121,7 +123,14 @@ app.post('/api/account/delete', function (req, res) {
   });
 });
 
-
+//Renvoie le HASH sha256 de la valeur envoyé
+app.post('/api/account/upload', function (req, res) {
+  var resultat = {resultat : 'NOK', data : null, message : 'l\'upload à échoué'};
+  console.log(req.files);
+  console.log(req);
+  //resultat.data = hash.sha256().update(req.body.data).digest('hex');
+  res.json(resultat);
+})
 //Récupère le compte en BDD via l'ID transmis
 app.get('/api/account/:id', function (req, res) {
   var resultat = {resultat : 'NOK', data : null, message : ''};

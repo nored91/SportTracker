@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../account/account.service';
 import { Account } from '../account/account';
+import { FormsModule }   from '@angular/forms';
 
 declare var jquery:any;
 declare var $ :any;
@@ -10,7 +11,7 @@ declare var $ :any;
     selector: 'app-account-form',
     templateUrl: './account-form.component.html',
     styleUrls: ['./account-form.component.css'],
-    providers: [AccountService]
+    providers: [AccountService],
 })
 export class AccountFormComponent implements OnInit {
     public error : {};
@@ -29,46 +30,39 @@ export class AccountFormComponent implements OnInit {
         
         //Le compte temporaire modifié
         var tmp = this.account;
+        var form = "form1";
         if(e.target.id == "formAccount"){
             var name = e.target.elements[1].value;
             var surname = e.target.elements[2].value;
 
             if(!name){
-                this.error['FormAccount'] = true;
-                this.msgError['FormAccount'] = "Le champ 'nom' est vide";
+                this.showalert(form,"Le champ 'nom' est vide",'alert-danger');
                 return false;
             }
             if(!surname){
-                this.error['FormAccount'] = true;
-                this.msgError['FormAccount'] = "Le champ 'prénom' est vide";
+                this.showalert(form,"Le champ 'prénom' est vide",'alert-danger');
                 return false;
             }
-
-            tmp.name = name;
-            tmp.surname = surname;
         }
         else if(e.target.id == "formEmail"){
+            form = "form2";
             var email = e.target.elements[0].value;
 
             if(!email){
-                this.error['FormEmail'] = true;
-                this.msgError['FormEmail'] = "Le champ 'email' est vide";
+                this.showalert(form,"Le champ 'email' est vide",'alert-danger');
                 return false;
             }
-
-            tmp.email = email;
         }
         else if(e.target.id == "formMdp"){
+            form = "form3";
             var mdp = e.target.elements[0].value;
 
             if(!mdp){
-                this.error['FormMdp'] = true;
-                this.msgError['FormMdp'] = "Le champ 'mot de passe' est vide";
+                this.showalert(form,"Le champ 'mot de passe' est vide",'alert-danger');
                 return false;
             }
-
-            isMdpChange = true;
             tmp.mdp = mdp;
+            isMdpChange = true;
         }
 
         //On demande à node de MAJ
@@ -79,25 +73,18 @@ export class AccountFormComponent implements OnInit {
 
             //On redirige vers la page
             this.router.navigate(["modifier-mon-compte"]);
-
-            //Aucune erreur
-            $("#" + e.target.id + " .alert").fadeIn(500);
-            $("#" + e.target.id + " .alert").click(function(){
-                $(this).fadeOut(500);
-            });
-            this.error[e.target.id] = false;
+            this.showalert(form,"Le compte à bien été modifié",'alert-success');
             return true;
         });
     }
 
-    //Si le formulaire est valide
-    public isValid(form){
-        return !this.error[form];
-    }
-
-    //Renvoie les messages d'erreur du formulaire
-    public getMsgError(form){
-        return this.msgError[form];
+    //Affiche une alerte bootstrap qui s'enlève au bout de 5 secondes
+    public showalert(id,message,alerttype) {
+        var time = Date.now();
+        $('#' + id).append('<div style="height:38px !important;padding-top:5px !important;" id="alert' + time + '" class="alert ' +  alerttype + '"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+        setTimeout(function() {
+        $("#alert" + time).remove();
+        }, 5000);
     }
 
     ngOnInit() {

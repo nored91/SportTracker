@@ -7,7 +7,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` --proxy-config proxy-conf.json dev server. Navigate to `http://localhost:4200/`.
+Run `ng serve --proxy-config proxy-conf.json` dev server. Navigate to `http://localhost:4200/`.
 
 ## Node
 

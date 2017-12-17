@@ -5,7 +5,8 @@ CREATE TABLE `account` (
   `mdp` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `verify` tinyint(1) NOT NULL DEFAULT '0',
-  `rights` int(1) NOT NULL DEFAULT '0'
+  `rights` int(1) NOT NULL DEFAULT '0',
+  `photo` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 ALTER TABLE `account`

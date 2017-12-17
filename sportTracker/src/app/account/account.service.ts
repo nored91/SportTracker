@@ -58,6 +58,14 @@ export class AccountService {
         return this.getHash(infoToken);
     }
 
+    //Pour uploader l'image du compte
+    upload(formData, id) {
+        return this.http.post("/api/account/upload", formData, {headers: this.headers})
+        .toPromise()
+        .then(response => response.json().data)
+        .catch(this.handleError);
+    }
+
     //Recupère le hash sha256 de la valeur envoyé
     getHash(info) : Promise<string>{
         return this.http.post("/api/hash", JSON.stringify({data:info}), {headers: this.headers})

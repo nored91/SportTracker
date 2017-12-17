@@ -116,12 +116,12 @@ export class AccountListComponent implements OnInit {
 
   //Affiche une alerte bootstrap qui s'enlève au bout de 5 secondes
   public showalert(message,alerttype) {
-      var time = Date.now();
-      $('.container-list').prepend('<div id="alert' + time + '" class="alert ' +  alerttype + '"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
-      setTimeout(function() {
-        $("#alert" + time).remove();
-      }, 5000);
-    }
+    var time = Date.now();
+    $('.container-list').prepend('<div id="alert' + time + '" class="alert ' +  alerttype + '"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+    setTimeout(function() {
+      $("#alert" + time).remove();
+    }, 5000);
+  }
 
   ngOnInit() {
     //On récupère le compte connecté via le service
