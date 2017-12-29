@@ -9,16 +9,16 @@
     <div class="bloc">
 
       <h2>Votre photo de profil</h2>
-      <form ref='uploadForm' id='uploadForm' action='http://localhost:4200/api/account/upload/' method='post'  enctype="multipart/form-data" >
+      <form ref='uploadForm' id='uploadForm' (submit)="upload($event);" action='http://localhost:4200/api/account/upload' method='post'  enctype="multipart/form-data" >
         <input type="hidden" name="id" value="{{ account.id }}"/>
         <img *ngIf="!account.photo" id="imgAccount" src="./assets/images/no_picture.png" alt="account picture" class="img-thumbnail">
-        <img *ngIf="account.photo" id="imgAccount" src="./assets/uploads/images/{{ account.photo }}" alt="photo de profil" class="img-thumbnail">
+        <img *ngIf="account.photo" id="imgAccount" [src]="cleanURL(account.photo)" alt="photo de profil" class="img-thumbnail">
         <div class="form-group">
-          <input name="photo" type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+          <input name="file" (change)="fileChangeEvent($event)" type="file" class="form-control-file" id="file" aria-describedby="fileHelp">
           <small id="fileHelp" class="form-text text-muted">Modifiez votre photo de profil.</small>
         </div>
         <div class="validationForm">
-          <input type="submit" class="btn btn-primary" value="Modifier la photo">
+          <button type="submit" class="btn btn-primary">Modifier la photo</button>
           <div id="form4" class="containerAlert"></div>
         </div>
       </form>

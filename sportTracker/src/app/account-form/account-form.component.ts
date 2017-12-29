@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AccountService } from '../account/account.service';
 import { Account } from '../account/account';
 import { FormsModule }   from '@angular/forms';
+import { Sanitizer } from '@angular/core';
 
 declare var jquery:any;
 declare var $ :any;
@@ -17,10 +18,14 @@ export class AccountFormComponent implements OnInit {
     public error : {};
     public msgError : {};
     public account : Account;
-    constructor(private accountService: AccountService, private router:Router) {
+    public filesToUpload: Array<File> = [];
+    public sanitizer;
+
+    constructor(private accountService: AccountService, private router:Router, private san:Sanitizer) {
         this.account = null;
         this.error = {'FormAccount' : false,'FormEmail' : false,'FormMdp' : false};
         this.msgError = {'FormAccount' : "",'FormEmail' : "",'FormMdp' : ""};
+        this.sanitizer = san;
     }
 
     //On vient chercher à se logguer
@@ -85,6 +90,46 @@ export class AccountFormComponent implements OnInit {
         setTimeout(function() {
         $("#alert" + time).remove();
         }, 5000);
+    }
+
+    /**
+     * Upload de l'image du compte
+     * @param e - L'évenement
+     */
+    public upload(e){
+        e.preventDefault();
+        
+        var files: Array<File> = this.filesToUpload;
+        if(files.length > 0){
+            var formData: any = new FormData();
+            formData.append("photo", files[0], files[0]['name']);
+            formData.append('id',this.account.id);
+            //On met à jour le compte
+            this.accountService.upload(formData).then(data => {
+                if(data){
+                    this.account.photo = data;
+                    this.showalert("form4","La photo à été mise à jour",'alert-success');
+                }
+                else{
+                    this.showalert("form4","Extension incorrect",'alert-danger');
+                }
+            }).catch(function(data){
+                this.showalert("form4","Une erreur s'est produite",'alert-danger');
+            });
+        }
+        else{
+            this.showalert("form4","Aucun fichier ajouté",'alert-danger');
+        }
+    }
+
+    //Quand on change d'image
+    fileChangeEvent(fileInput: any) {
+        this.filesToUpload = <Array<File>>fileInput.target.files;
+    }
+
+    //Pour clean la source en base 64
+    cleanURL(url): String {
+        return   this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 
     ngOnInit() {

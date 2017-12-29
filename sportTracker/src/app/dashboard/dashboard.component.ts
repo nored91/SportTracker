@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../account/account.service';
 import { Account } from '../account/account';
+import { Sanitizer } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,11 @@ import { Account } from '../account/account';
 export class DashboardComponent implements OnInit {
 
   public account : Account;
-  constructor(private accountService: AccountService, private router:Router) {
+  public sanitizer;
+
+  constructor(private accountService: AccountService, private router:Router,private san:Sanitizer) {
     this.account = null;
+    this.sanitizer = san;
   }
 
   //Retourne le nom complet
@@ -40,6 +44,11 @@ export class DashboardComponent implements OnInit {
     }
     return resultat;
   }
+
+  //Pour clean la source en base 64
+  cleanURL(url): String {
+    return   this.sanitizer.bypassSecurityTrustResourceUrl(url);
+}
   
   ngOnInit() {
     //On récupère le compte connecté via le service

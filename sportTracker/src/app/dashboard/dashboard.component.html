@@ -18,7 +18,8 @@
             <a class="btn btn-primary" href="#" routerLink="/modifier-mon-compte">Modifier mes informations</a>
           </div>
           <div>
-              <img src="./assets/images/no_picture.png" alt="account picture" class="img-thumbnail">
+            <img *ngIf="!account.photo" id="imgAccount" src="./assets/images/no_picture.png" alt="account picture" class="img-thumbnail">
+            <img *ngIf="account.photo" id="imgAccount" [src]="cleanURL(account.photo)" alt="photo de profil" class="img-thumbnail">
           </div>
         </div>
       </div>

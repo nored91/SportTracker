@@ -59,10 +59,13 @@ export class AccountService {
     }
 
     //Pour uploader l'image du compte
-    upload(formData, id) {
-        return this.http.post("/api/account/upload", formData, {headers: this.headers})
-        .toPromise()
-        .then(response => response.json().data)
+    upload(formData) {
+        let headers = new Headers();
+        //headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+
+        return this.http.post("/api/account/upload", formData,{ headers: headers }).toPromise()
+        .then(response => response.json().data as string)
         .catch(this.handleError);
     }
 
