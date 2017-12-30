@@ -7,7 +7,7 @@ import { Sanitizer } from '@angular/core';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.less'],
   providers: [AccountService]
 })
 export class DashboardComponent implements OnInit {

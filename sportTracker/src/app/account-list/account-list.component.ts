@@ -10,7 +10,7 @@ declare var $ :any;
 @Component({
   selector: 'app-account-list',
   templateUrl: './account-list.component.html',
-  styleUrls: ['./account-list.component.css'],
+  styleUrls: ['./account-list.component.less'],
   providers: [AccountService]
 })
 

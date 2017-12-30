@@ -11,7 +11,7 @@ declare var $ :any;
 @Component({
     selector: 'app-account-form',
     templateUrl: './account-form.component.html',
-    styleUrls: ['./account-form.component.css'],
+    styleUrls: ['./account-form.component.less'],
     providers: [AccountService],
 })
 export class AccountFormComponent implements OnInit {
