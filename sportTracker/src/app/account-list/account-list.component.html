@@ -35,7 +35,8 @@
         </p>
       </div>
       <div class="right">
-          <img src="./assets/images/no_picture.png" alt="account picture" class="img-thumbnail">
+        <img *ngIf="!accountSelected.photo" id="imgAccount" src="./assets/images/no_picture.png" alt="account picture" class="img-thumbnail">
+        <img *ngIf="accountSelected.photo" id="imgAccount" [src]="cleanURL(accountSelected.photo)" alt="photo de profil" class="img-thumbnail">
       </div>
   </div>
 </div>

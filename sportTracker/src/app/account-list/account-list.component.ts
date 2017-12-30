@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../account/account.service';
 import { Account } from '../account/account';
+import { Sanitizer } from '@angular/core';
 
 declare var jquery:any;
 declare var $ :any;
@@ -19,10 +20,12 @@ export class AccountListComponent implements OnInit {
   public account : Account;
   public listaccount : Account[];
   public accountSelected : Account;
+  public sanitizer;
 
-  constructor(private accountService: AccountService, private router:Router) {
+  constructor(private accountService: AccountService, private router:Router, private san:Sanitizer) {
     this.account = null;
     this.accountSelected = null;
+    this.sanitizer = san;
   }
 
   //Retourne le nom complet
@@ -78,6 +81,11 @@ export class AccountListComponent implements OnInit {
       });
     }
   }
+
+  //Pour clean la source en base 64
+  cleanURL(url): String {
+    return   this.sanitizer.bypassSecurityTrustResourceUrl(url);
+}
 
   /**
    * On valide le compte séléctionné
