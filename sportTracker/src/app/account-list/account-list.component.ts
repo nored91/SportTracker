@@ -74,6 +74,7 @@ export class AccountListComponent implements OnInit {
           this.showalert("Le compte à bien été supprimé","alert-success");
           //On enlève le compte de la liste
           this.listaccount.splice(this.listaccount.indexOf(account), 1);
+          this.accountSelected = null;
         }
         else{
           this.showalert("La suppression du compte à rencontré un problème","alert-warning");
