@@ -14,3 +14,23 @@ ALTER TABLE `account`
 
 ALTER TABLE `account`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+------------------------------------------------------------------
+
+CREATE TABLE `workout` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `resume` text NOT NULL,
+  `description` text NOT NULL,
+  `typeSport` int(11) NOT NULL,
+  `duration` int(11) NOT NULL,
+  `feeling` text NOT NULL,
+  `date` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+ALTER TABLE `workout`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+ALTER TABLE `workout`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
