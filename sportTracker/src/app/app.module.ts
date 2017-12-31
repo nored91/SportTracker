@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccountFormComponent } from './account-form/account-form.component';
 import { AccountListComponent } from './account-list/account-list.component';
+import { WorkoutComponent } from './workout/workout.component';
 
 const appRoutes:Routes = [
     {
@@ -48,7 +49,8 @@ const appRoutes:Routes = [
     HomeComponent,
     DashboardComponent,
     AccountFormComponent,
-    AccountListComponent
+    AccountListComponent,
+    WorkoutComponent
   ],
   imports: [
     BrowserModule,

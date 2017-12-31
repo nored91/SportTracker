@@ -17,8 +17,10 @@ ALTER TABLE `account`
 
 ------------------------------------------------------------------
 
+
 CREATE TABLE `workout` (
   `id` int(11) NOT NULL,
+  `id_account` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `resume` text NOT NULL,
   `description` text NOT NULL,
@@ -26,11 +28,15 @@ CREATE TABLE `workout` (
   `duration` int(11) NOT NULL,
   `feeling` text NOT NULL,
   `date` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `workout`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+  ADD KEY `id` (`id`),
+  ADD KEY `id_account` (`id_account`);
 
 ALTER TABLE `workout`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `workout`
+  ADD CONSTRAINT `id_account_account` FOREIGN KEY (`id_account`) REFERENCES `account` (`id`);
