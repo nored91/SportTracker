@@ -1,0 +1,44 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">Sport Motivation Tracker</h1>
+    <h2>Ajouter une séance de sport</h2>
+  </div>
+</div>
+
+<div class="container">
+    <h2>Votre séance</h2>
+    <form enctype="multipart/form-data" id="formWorkout" (submit)="createWorkout($event)">
+      <div class="form-group">
+        <label for="name">Nom de la séance</label>
+        <input [(ngModel)]="workout.name" name="name" type="text" class="form-control" id="name" placeholder="Entrez le libellé de votre séance" required>
+      </div>
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input [(ngModel)]="workout.date" name="date" type="text" class="form-control" id="date">
+      </div>
+      <div class="form-group">
+        <label for="typeSport">Sport</label>
+        <input [(ngModel)]="workout.typeSport" name="typeSport" type="text" class="form-control" id="typeSport" placeholder="Entre le sport pratiquée" required>
+      </div>
+      <div class="form-group">
+        <label for="resume">Résumé court</label>
+        <input [(ngModel)]="workout.resume" name="resume" type="text" class="form-control" id="resume">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea [(ngModel)]="workout.description" name="description" id="description" rows="4"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="duration">Durée de la séance</label>
+        <input [(ngModel)]="workout.duration" name="duration" type="text" class="form-control" id="duration" placeholder="Entrez la durée">
+      </div>
+      <div class="form-group">
+        <label for="feeling">Sensation</label>
+        <textarea [(ngModel)]="workout.feeling" name="feeling" id="feeling" rows="4" placeholder="Décrivez vos sensations concernant votre séance"></textarea>
+      </div>
+      <div class="validationForm">
+        <button type="submit" class="btn btn-primary">Ajouter ma séance</button>
+        <div id="formAlert" class="containerAlert"></div>
+      </div>
+    </form>
+</div>

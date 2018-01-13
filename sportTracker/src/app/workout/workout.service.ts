@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import { Workout } from './workout';
 
 @Injectable()
-export class AccountService {
+export class WorkoutService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}

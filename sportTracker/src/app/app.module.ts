@@ -13,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccountFormComponent } from './account-form/account-form.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { WorkoutComponent } from './workout/workout.component';
+import { WorkoutFormComponent } from './workout-form/workout-form.component';
 
 const appRoutes:Routes = [
     {
@@ -38,6 +39,10 @@ const appRoutes:Routes = [
     {
       path: 'administrer-les-comptes',
       component: AccountListComponent
+    },
+    {
+      path: 'ajouter-une-seance',
+      component: WorkoutFormComponent
     }
 ]
 
@@ -50,7 +55,8 @@ const appRoutes:Routes = [
     DashboardComponent,
     AccountFormComponent,
     AccountListComponent,
-    WorkoutComponent
+    WorkoutComponent,
+    WorkoutFormComponent
   ],
   imports: [
     BrowserModule,

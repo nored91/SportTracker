@@ -28,6 +28,7 @@ CREATE TABLE `workout` (
   `duration` int(11) NOT NULL,
   `feeling` text NOT NULL,
   `date` int(11) NOT NULL
+  `photo` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `workout`
