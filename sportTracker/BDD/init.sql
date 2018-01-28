@@ -41,3 +41,5 @@ ALTER TABLE `workout`
 
 ALTER TABLE `workout`
   ADD CONSTRAINT `id_account_account` FOREIGN KEY (`id_account`) REFERENCES `account` (`id`);
+
+  ALTER TABLE `workout` CHANGE `photo` `photo` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL;

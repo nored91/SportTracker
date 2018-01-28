@@ -4,7 +4,7 @@ export class Workout {
     name: string;
     resume: string;
     description: string;
-    typeSport: string;
+    typeSport: number;
     duration: number;
     feeling: string;
     date: number;

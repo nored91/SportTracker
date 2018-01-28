@@ -42,7 +42,7 @@ export class WorkoutService {
 
     //Crée le workout et renvoi le workout créé
     createWorkout(Workout : Workout): Promise<Workout> {
-        return this.http.post("/api/workout/create", JSON.stringify({id:Workout.id,id_account:Workout.id_account,name:Workout.name,description:Workout.description,resume:Workout.resume,duration:Workout.duration,feeling:Workout.feeling,typeSport:Workout.typeSport}), {headers: this.headers})
+        return this.http.post("/api/workout/create", JSON.stringify({id:Workout.id,id_account:Workout.id_account,name:Workout.name,description:Workout.description,resume:Workout.resume,duration:Workout.duration,feeling:Workout.feeling,typeSport:Workout.typeSport,date:Workout.date}), {headers: this.headers})
             .toPromise()
             .then(response => response.json().data as Workout)
             .catch(this.handleError);

@@ -7,7 +7,7 @@
 
 <div class="container">
     <h2>Votre séance</h2>
-    <form enctype="multipart/form-data" id="formWorkout" (submit)="createWorkout($event)">
+    <form enctype="multipart/form-data" id="FormWorkout" (submit)="register($event)">
       <div class="form-group">
         <label for="name">Nom de la séance</label>
         <input [(ngModel)]="workout.name" name="name" type="text" class="form-control" id="name" placeholder="Entrez le libellé de votre séance" required>
@@ -17,16 +17,24 @@
         <input [(ngModel)]="workout.date" name="date" type="text" class="form-control" id="date">
       </div>
       <div class="form-group">
-        <label for="typeSport">Sport</label>
-        <input [(ngModel)]="workout.typeSport" name="typeSport" type="text" class="form-control" id="typeSport" placeholder="Entre le sport pratiquée" required>
-      </div>
+        <label for="typeSport">Sport :</label>
+        <select class="form-control" [(ngModel)]="workout.typeSport" id="typeSport" name="typeSport">
+          <option value="1">Escalade</option>
+          <option value="2">WOD - Renforcement musculaire</option>
+          <option value="3">Course à pied</option>
+          <option value="5">Natation</option>
+          <option value="6">Ski/Snowboard</option>
+          <option value="7">Surf</option>
+          <option value="8">Wakeboard</option>
+        </select>
+      </div> 
       <div class="form-group">
         <label for="resume">Résumé court</label>
         <input [(ngModel)]="workout.resume" name="resume" type="text" class="form-control" id="resume">
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea [(ngModel)]="workout.description" name="description" id="description" rows="4"></textarea>
+        <textarea [(ngModel)]="workout.description" class="form-control" name="description" id="description" rows="4"></textarea>
       </div>
       <div class="form-group">
         <label for="duration">Durée de la séance</label>
@@ -34,7 +42,7 @@
       </div>
       <div class="form-group">
         <label for="feeling">Sensation</label>
-        <textarea [(ngModel)]="workout.feeling" name="feeling" id="feeling" rows="4" placeholder="Décrivez vos sensations concernant votre séance"></textarea>
+        <textarea [(ngModel)]="workout.feeling" class="form-control" name="feeling" id="feeling" rows="4" placeholder="Décrivez vos sensations concernant votre séance"></textarea>
       </div>
       <div class="validationForm">
         <button type="submit" class="btn btn-primary">Ajouter ma séance</button>
