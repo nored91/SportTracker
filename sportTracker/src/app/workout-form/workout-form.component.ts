@@ -6,6 +6,7 @@ import { WorkoutService } from '../workout/workout.service';
 import { AccountService } from '../account/account.service';
 import { FormsModule }   from '@angular/forms';
 import { Sanitizer } from '@angular/core';
+import {INgxMyDpOptions, IMyDateModel} from 'ngx-mydatepicker';
 
 declare var jquery:any;
 declare var $:any;
@@ -17,9 +18,13 @@ declare var $:any;
   providers: [WorkoutService,AccountService],
 })
 
-
-
 export class WorkoutFormComponent implements OnInit {
+
+    public myOptions: INgxMyDpOptions = {
+        // other options...
+        dateFormat: 'dd.mm.yyyy',
+    };
+    public model: any = {};
 
     public error : {};
     public msgError : {};
@@ -39,14 +44,10 @@ export class WorkoutFormComponent implements OnInit {
     public register(e){
         e.preventDefault();
 
-        
         var name = e.target.elements[0].value;
-        var date = e.target.elements[1].value;
-        var resume = e.target.elements[2].value;
-        var description = e.target.elements[3].value;
+        var date = e.target.elements[3].value;
         var typeSport = e.target.elements[4].value;
-        var duration = e.target.elements[5].value
-        var feeling = e.target.elements[6].value
+   
 
         if(!name){
             this.showalert("FormWorkout","Le nom de la séance est vide",'alert-danger');
@@ -64,7 +65,17 @@ export class WorkoutFormComponent implements OnInit {
         //On crée la séance
         var workoutTmp = this.workout;
         workoutTmp.id_account = this.account.id;
-        console.log(workoutTmp);
+        workoutTmp.date = date;
+
+        if(!workoutTmp.description){
+            workoutTmp.description = "";
+        }
+        if(!workoutTmp.resume){
+            workoutTmp.resume = "";
+        }
+        if(!workoutTmp.feeling){
+            workoutTmp.feeling = "";
+        }
 
         //On demande au service de créer le compte et on l'ajoute à la liste
         this.workoutService.createWorkout(workoutTmp).then(workout => {;
@@ -90,6 +101,12 @@ export class WorkoutFormComponent implements OnInit {
         }, 5000);
     }
 
+    // optional date changed callback
+    public onDateChanged(event: IMyDateModel): void {
+        // date selected
+        $('#date').val(event.epoc);
+    }
+
     ngOnInit() {
         //On récupère le compte connecté via le service
         if(this.account == null){
@@ -107,5 +124,6 @@ export class WorkoutFormComponent implements OnInit {
             }
         }
     }
+    
 
 }

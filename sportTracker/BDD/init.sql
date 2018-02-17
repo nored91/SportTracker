@@ -23,11 +23,11 @@ CREATE TABLE `workout` (
   `id_account` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `resume` text NOT NULL,
-  `description` text NOT NULL,
+  `description` text,
   `typeSport` int(11) NOT NULL,
   `duration` int(11) NOT NULL,
-  `feeling` text NOT NULL,
-  `date` int(11) NOT NULL
+  `feeling` text,
+  `date` int(11) NOT NULL,
   `photo` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
