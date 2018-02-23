@@ -33,8 +33,16 @@ export class WorkoutFormComponent implements OnInit {
     public workout: Workout = null;
     public account : Account;
 
+    //Duration field
+    public minutes : Array<number> = [];
+    public hours : Array<number> = [];
+
     constructor(private workoutService: WorkoutService,private accountService: AccountService, private router:Router, private san:Sanitizer) {
         this.sanitizer = san;
+
+        //Fill duration values
+        for(var i=0; i<60;i++){this.minutes[i] = i;}
+        for(var i=0; i<24;i++){this.hours[i] = i;}
 
         if(this.workout == null){
             this.workout = new Workout();
@@ -47,6 +55,8 @@ export class WorkoutFormComponent implements OnInit {
         var name = e.target.elements[0].value;
         var date = e.target.elements[3].value;
         var typeSport = e.target.elements[4].value;
+        var hours = parseInt(e.target.elements[7].value);
+        var minutes = parseInt(e.target.elements[8].value);
    
 
         if(!name){
@@ -66,6 +76,7 @@ export class WorkoutFormComponent implements OnInit {
         var workoutTmp = this.workout;
         workoutTmp.id_account = this.account.id;
         workoutTmp.date = date;
+        workoutTmp.duration = (hours * 60) + minutes;
 
         if(!workoutTmp.description){
             workoutTmp.description = "";

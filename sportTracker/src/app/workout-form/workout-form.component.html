@@ -44,7 +44,13 @@
       </div>
       <div class="form-group">
         <label for="duration">Durée de la séance</label>
-        <input [(ngModel)]="workout.duration" name="duration" type="text" class="form-control" id="duration" placeholder="Entrez la durée">
+        <br>
+        <select class="form-control inline" name="hours">
+            <option *ngFor="let hour of hours" value="{{hour}}">{{hour}}</option>
+        </select> heure(s) et
+        <select class="form-control inline" name="minutes">
+          <option *ngFor="let minute of minutes" value="{{minute}}">{{minute}}</option>
+        </select> minute(s)
       </div>
       <div class="form-group">
         <label for="feeling">Sensation</label>
