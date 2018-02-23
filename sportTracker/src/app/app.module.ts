@@ -15,6 +15,7 @@ import { AccountFormComponent } from './account-form/account-form.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { WorkoutComponent } from './workout/workout.component';
 import { WorkoutFormComponent } from './workout-form/workout-form.component';
+import { WorkoutListComponent } from './workout-list/workout-list.component';
 
 const appRoutes:Routes = [
     {
@@ -44,6 +45,10 @@ const appRoutes:Routes = [
     {
       path: 'ajouter-une-seance',
       component: WorkoutFormComponent
+    },
+    {
+      path: 'voir-mes-seances',
+      component: WorkoutListComponent
     }
 ]
 
@@ -57,7 +62,8 @@ const appRoutes:Routes = [
     AccountFormComponent,
     AccountListComponent,
     WorkoutComponent,
-    WorkoutFormComponent
+    WorkoutFormComponent,
+    WorkoutListComponent
   ],
   imports: [
     BrowserModule,

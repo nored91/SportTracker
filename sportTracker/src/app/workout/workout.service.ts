@@ -8,6 +8,15 @@ import { Workout } from './workout';
 export class WorkoutService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
+    private listTypeSport = {
+        1 : "Escalade",
+        2 : "WOD - Renforcement musculaire",
+        3 : "Course à pied",
+        5 : "Natation",
+        6 : "Ski/Snowboard",
+        7 : "Surf",
+        8 : "Wakeboard"
+    }
     constructor(private http: Http) {}
 
     //Récupère les workout via l'API
@@ -46,6 +55,10 @@ export class WorkoutService {
             .toPromise()
             .then(response => response.json().data as Workout)
             .catch(this.handleError);
+    }
+
+    getListTypeSport(){
+        return this.listTypeSport;
     }
 
         

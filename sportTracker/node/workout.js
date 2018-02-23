@@ -30,10 +30,10 @@ app.post('/api/workout/upload', function (req, res) {
 })
 
 //Liste les comptes en BDD
-app.post('/api/account/list', function (req, res) {
+app.post('/api/workout/list', function (req, res) {
 
     var resultat = {resultat : 'NOK', data : [], message : ''};
-    var reqSql = "SELECT * FROM account";
+    var reqSql = "SELECT * FROM workout";
   
     if(req.body.filter != ""){
       reqSql = reqSql + " WHERE " + req.body.filter;
